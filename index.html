@@ -1,0 +1,1341 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>NeuroEspañol</title>
+<meta name="description" content="Профессиональный испанский для нейропсихолога">
+<meta name="theme-color" content="#2D6A4F">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="NeuroEspañol">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg:        #F7F5F0;
+  --bg2:       #EDEBE4;
+  --card-bg:   #FFFFFF;
+  --fg:        #1A1916;
+  --fg2:       #6B6860;
+  --accent:    #2D6A4F;
+  --accent2:   #52B788;
+  --accent-lt: #D8F3DC;
+  --danger:    #C1440E;
+  --danger-lt: #FDEBD8;
+  --gold:      #C98B2A;
+  --gold-lt:   #FEF3DC;
+  --border:    #DEDAD2;
+  --radius:    14px;
+  --radius-sm: 8px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:        #131410;
+    --bg2:       #1E1E18;
+    --card-bg:   #27271F;
+    --fg:        #F0EDE6;
+    --fg2:       #9A9689;
+    --accent:    #52B788;
+    --accent2:   #74C69D;
+    --accent-lt: #1B3D2A;
+    --danger:    #E07550;
+    --danger-lt: #3D1C10;
+    --gold:      #E8A83A;
+    --gold-lt:   #3D2C0A;
+    --border:    #38362E;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:        #131410;
+  --bg2:       #1E1E18;
+  --card-bg:   #27271F;
+  --fg:        #F0EDE6;
+  --fg2:       #9A9689;
+  --accent:    #52B788;
+  --accent2:   #74C69D;
+  --accent-lt: #1B3D2A;
+  --danger:    #E07550;
+  --danger-lt: #3D1C10;
+  --gold:      #E8A83A;
+  --gold-lt:   #3D2C0A;
+  --border:    #38362E;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ─── HEADER ─── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 14px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+}
+.logo span { color: var(--fg); }
+.header-stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--fg2);
+}
+.streak {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  color: var(--gold);
+}
+.xp-badge {
+  background: var(--accent-lt);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+/* ─── PROGRESS BAR ─── */
+.progress-wrap {
+  padding-block: 10px;
+  flex-shrink: 0;
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--fg2);
+  margin-bottom: 6px;
+}
+.progress-bar {
+  height: 6px;
+  background: var(--bg2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+/* ─── MAIN AREA ─── */
+.main {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-block: 12px;
+}
+
+/* ─── SCREENS ─── */
+.screen { display: none; flex-direction: column; flex: 1; gap: 14px; }
+.screen.active { display: flex; }
+
+/* ─── HOME SCREEN ─── */
+.home-hero {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  text-align: center;
+}
+.home-hero h2 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  text-wrap: balance;
+  margin-bottom: 6px;
+}
+.home-hero p { color: var(--fg2); font-size: 14px; max-width: 280px; margin: 0 auto; }
+
+.mode-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.mode-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.1s;
+  text-align: left;
+}
+.mode-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+.mode-card:active { transform: translateY(0); }
+.mode-icon { font-size: 22px; margin-bottom: 8px; }
+.mode-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+.mode-desc { font-size: 12px; color: var(--fg2); line-height: 1.4; }
+
+.dir-toggle {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.dir-label { font-size: 13px; color: var(--fg2); }
+.dir-btns { display: flex; gap: 6px; }
+.dir-btn {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.dir-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.cats-section h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg2);
+  margin-bottom: 8px;
+}
+.cats-list { display: flex; flex-direction: column; gap: 8px; overflow-y: auto; max-height: 180px; }
+.cat-row {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.cat-row:hover { border-color: var(--accent); }
+.cat-row.selected { border-color: var(--accent); background: var(--accent-lt); }
+.cat-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cat-name { font-weight: 500; font-size: 14px; flex: 1; }
+.cat-count { font-size: 12px; color: var(--fg2); }
+.cat-progress-mini {
+  width: 50px; height: 4px;
+  background: var(--bg2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.cat-progress-mini-fill { height: 100%; background: var(--accent); border-radius: 99px; }
+
+.start-btn {
+  width: 100%;
+  padding: 15px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  letter-spacing: -0.01em;
+  flex-shrink: 0;
+  margin-top: auto;
+}
+.start-btn:hover { background: var(--accent2); }
+.start-btn:active { transform: scale(0.98); }
+
+/* ─── CARD MODE ─── */
+.card-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1000px;
+}
+.flip-card {
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 5/3;
+  position: relative;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+.flip-card.flipped { transform: rotateY(180deg); }
+.card-face {
+  position: absolute;
+  inset: 0;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+.card-face.back { transform: rotateY(180deg); }
+.card-lang {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--fg2);
+}
+.card-word {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(22px, 5vw, 32px);
+  font-weight: 700;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--fg);
+}
+.card-hint { font-size: 13px; color: var(--fg2); text-align: center; font-style: italic; }
+.card-category {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-top: 4px;
+}
+.tap-hint {
+  font-size: 12px;
+  color: var(--fg2);
+  text-align: center;
+  opacity: 0.7;
+}
+.card-actions {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.card-actions button {
+  flex: 1;
+  padding: 13px;
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.15s;
+}
+.card-actions button:active { transform: scale(0.96); }
+.btn-wrong {
+  background: var(--danger-lt);
+  color: var(--danger);
+}
+.btn-right {
+  background: var(--accent-lt);
+  color: var(--accent);
+}
+
+/* ─── CHOICE MODE ─── */
+.question-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.question-label { font-size: 12px; color: var(--fg2); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
+.question-word {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(22px, 5vw, 30px);
+  text-wrap: balance;
+}
+.question-hint { font-size: 13px; color: var(--fg2); margin-top: 6px; font-style: italic; }
+.choices {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  flex: 1;
+  overflow-y: auto;
+}
+.choice-btn {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.choice-btn:hover:not(:disabled) { border-color: var(--accent); }
+.choice-btn.correct { background: var(--accent-lt); border-color: var(--accent); color: var(--accent); }
+.choice-btn.wrong { background: var(--danger-lt); border-color: var(--danger); color: var(--danger); }
+.choice-letter {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--bg2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.choice-btn.correct .choice-letter { background: var(--accent); color: #fff; }
+.choice-btn.wrong .choice-letter { background: var(--danger); color: #fff; }
+.next-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex-shrink: 0;
+  display: none;
+}
+.next-btn.visible { display: block; }
+.next-btn:hover { background: var(--accent2); }
+
+/* ─── TYPE MODE ─── */
+.type-prompt {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.type-word {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(22px, 5vw, 30px);
+  text-wrap: balance;
+}
+.type-hint { font-size: 13px; color: var(--fg2); margin-top: 6px; font-style: italic; }
+.type-area { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.type-input-wrap { position: relative; }
+.type-input {
+  width: 100%;
+  padding: 14px 48px 14px 16px;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fg);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.type-input:focus { border-color: var(--accent); }
+.type-input.correct { border-color: var(--accent); background: var(--accent-lt); }
+.type-input.wrong { border-color: var(--danger); background: var(--danger-lt); }
+.type-result {
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  display: none;
+}
+.type-result.correct { background: var(--accent-lt); color: var(--accent); display: block; }
+.type-result.wrong { background: var(--danger-lt); color: var(--danger); display: block; }
+.type-check-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.type-check-btn:hover { background: var(--accent2); }
+
+/* ─── RESULTS SCREEN ─── */
+.results-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 18px;
+  flex: 1;
+}
+.results-screen.active { display: flex; }
+.results-emoji { font-size: 56px; }
+.results-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  text-wrap: balance;
+}
+.results-subtitle { color: var(--fg2); font-size: 15px; }
+.results-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+}
+.stat-box {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 10px;
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 24px;
+  font-variant-numeric: tabular-nums;
+}
+.stat-label { font-size: 11px; color: var(--fg2); margin-top: 2px; }
+.results-btns { display: flex; flex-direction: column; gap: 9px; width: 100%; max-width: 320px; }
+.btn-primary {
+  padding: 14px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+.btn-secondary {
+  padding: 14px;
+  background: transparent;
+  color: var(--fg2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* ─── NAV BAR ─── */
+.nav {
+  display: flex;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.nav-btn {
+  flex: 1;
+  padding: 10px 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: var(--fg2);
+  font-size: 11px;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+.nav-btn.active { color: var(--accent); }
+.nav-icon { font-size: 19px; }
+
+/* Responsive */
+@media (min-width: 480px) {
+  .mode-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flip-card { transition: none; }
+  * { transition-duration: 0.01ms !important; }
+}
+
+
+/* ─── PWA / mobile additions ─── */
+[hidden] { display: none !important; }
+html, body { height: 100%; overscroll-behavior: none; }
+body {
+  height: 100dvh;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+button, .mode-card, .cat-row, .flip-card { touch-action: manipulation; -webkit-user-select: none; user-select: none; }
+.header { padding-top: max(14px, calc(env(safe-area-inset-top, 0px) + 6px)); }
+.main { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.cats-list { max-height: none; overflow: visible; }
+.nav { padding-bottom: max(6px, env(safe-area-inset-bottom, 0px)); }
+.page-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; }
+.page-sub { color: var(--fg2); font-size: 13px; margin-top: -8px; }
+.prog-row { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
+.prog-row-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.prog-row-name { font-weight: 600; font-size: 14px; }
+.prog-row-num { font-size: 13px; color: var(--fg2); font-variant-numeric: tabular-nums; }
+.prog-track { height: 5px; background: var(--bg2); border-radius: 99px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 99px; }
+.summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.vocab-list { display: flex; flex-direction: column; gap: 7px; }
+.vocab-row { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 14px; display: flex; align-items: center; gap: 10px; }
+.vocab-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.vocab-es { font-weight: 600; font-size: 14px; }
+.vocab-ru { font-size: 13px; color: var(--fg2); }
+.vocab-ok { font-size: 11px; color: var(--accent); font-weight: 700; }
+#homeScreen .start-btn { position: sticky; bottom: 0; z-index: 2; box-shadow: 0 -10px 16px var(--bg); }
+.reset-btn { background: none; border: none; color: var(--fg2); font-size: 12px; text-decoration: underline; cursor: pointer; padding: 8px; align-self: center; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">Neuro<span>Español</span></div>
+  <div class="header-stats">
+    <div class="streak" title="Дней подряд">🔥 <span id="streakNum">0</span></div>
+    <div class="xp-badge">+<span id="xpNum">0</span> XP</div>
+  </div>
+</header>
+
+<!-- PROGRESS BAR (shown during practice) -->
+<div class="progress-wrap" id="progressWrap" hidden>
+  <div class="progress-meta">
+    <span id="progressLabel">Вопрос 1 из 10</span>
+    <span id="progressPct">0%</span>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+</div>
+
+<main class="main" id="main">
+
+  <!-- ── HOME SCREEN ── -->
+  <section class="screen active" id="homeScreen">
+    <div class="home-hero">
+      <h2>Профессиональный испанский для нейропсихолога</h2>
+      <p>Термины INECO, когнитивная наука и академический язык</p>
+    </div>
+
+    <div class="mode-grid">
+      <div class="mode-card" onclick="selectMode('cards')">
+        <div class="mode-icon">🃏</div>
+        <div class="mode-title">Карточки</div>
+        <div class="mode-desc">Перевернуть — вспомнить</div>
+      </div>
+      <div class="mode-card" onclick="selectMode('choice')">
+        <div class="mode-icon">🔤</div>
+        <div class="mode-title">Выбор</div>
+        <div class="mode-desc">4 варианта ответа</div>
+      </div>
+      <div class="mode-card" onclick="selectMode('type')">
+        <div class="mode-icon">✍️</div>
+        <div class="mode-title">Набор</div>
+        <div class="mode-desc">Написать перевод</div>
+      </div>
+      <div class="mode-card" onclick="selectMode('all')">
+        <div class="mode-icon">⚡</div>
+        <div class="mode-title">Микс</div>
+        <div class="mode-desc">Все режимы вперемешку</div>
+      </div>
+    </div>
+
+    <div class="dir-toggle">
+      <span class="dir-label">Направление:</span>
+      <div class="dir-btns">
+        <button class="dir-btn active" id="dirES" onclick="setDir('es-ru')">ES→RU</button>
+        <button class="dir-btn" id="dirRU" onclick="setDir('ru-es')">RU→ES</button>
+        <button class="dir-btn" id="dirBOTH" onclick="setDir('both')">Оба</button>
+      </div>
+    </div>
+
+    <div class="cats-section">
+      <h3>Темы</h3>
+      <div class="cats-list" id="catsList"></div>
+    </div>
+
+    <button class="start-btn" onclick="startSession()">Начать →</button>
+  </section>
+
+  <!-- ── CARDS SCREEN ── -->
+  <section class="screen" id="cardsScreen">
+    <div class="card-wrap" id="cardWrap">
+      <div class="flip-card" id="flipCard" onclick="flipCard()">
+        <div class="card-face front">
+          <div class="card-lang" id="cardFrontLang">ESPAÑOL</div>
+          <div class="card-word" id="cardFrontWord"></div>
+          <div class="card-hint" id="cardFrontHint"></div>
+          <span class="card-category" id="cardFrontCat"></span>
+          <div class="tap-hint">нажми, чтобы перевернуть</div>
+        </div>
+        <div class="card-face back">
+          <div class="card-lang" id="cardBackLang">РУССКИЙ</div>
+          <div class="card-word" id="cardBackWord"></div>
+          <div class="card-hint" id="cardBackHint"></div>
+          <span class="card-category" id="cardBackCat"></span>
+        </div>
+      </div>
+    </div>
+    <div class="card-actions" id="cardActions" hidden>
+      <button class="btn-wrong" onclick="rateCard(false)">✗ Не знала</button>
+      <button class="btn-right" onclick="rateCard(true)">✓ Знала</button>
+    </div>
+    <p class="tap-hint" id="cardTapHint" style="flex-shrink:0">Нажми на карточку, чтобы увидеть ответ</p>
+  </section>
+
+  <!-- ── CHOICE SCREEN ── -->
+  <section class="screen" id="choiceScreen">
+    <div class="question-card">
+      <div class="question-label" id="qLabel">ESPAÑOL → РУССКИЙ</div>
+      <div class="question-word" id="qWord"></div>
+      <div class="question-hint" id="qHint"></div>
+    </div>
+    <div class="choices" id="choicesList"></div>
+    <button class="next-btn" id="choiceNext" onclick="nextCard()">Далее →</button>
+  </section>
+
+  <!-- ── TYPE SCREEN ── -->
+  <section class="screen" id="typeScreen">
+    <div class="type-prompt">
+      <div class="question-label" id="typeLabel">ESPAÑOL → РУССКИЙ</div>
+      <div class="type-word" id="typeWord"></div>
+      <div class="type-hint" id="typeHint"></div>
+    </div>
+    <div class="type-area">
+      <div class="type-input-wrap">
+        <input class="type-input" id="typeInput" placeholder="Введи перевод..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" onkeydown="typeKeydown(event)">
+      </div>
+      <div class="type-result" id="typeResult"></div>
+      <button class="type-check-btn" id="typeBtn" onclick="typeAction()">Проверить</button>
+    </div>
+  </section>
+
+  <!-- ── RESULTS SCREEN ── -->
+  <section class="results-screen" id="resultsScreen">
+    <div class="results-emoji" id="resultsEmoji">🧠</div>
+    <div class="results-title" id="resultsTitle">Сессия завершена!</div>
+    <div class="results-subtitle" id="resultsSub">Ты отлично поработала</div>
+    <div class="results-stats">
+      <div class="stat-box">
+        <div class="stat-num" id="statCorrect" style="color:var(--accent)">0</div>
+        <div class="stat-label">Правильно</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="statWrong" style="color:var(--danger)">0</div>
+        <div class="stat-label">Ошибок</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="statXP" style="color:var(--gold)">0</div>
+        <div class="stat-label">XP</div>
+      </div>
+    </div>
+    <div class="results-btns">
+      <button class="btn-primary" onclick="goHome()">На главную</button>
+      <button class="btn-secondary" id="retryBtn" onclick="retrySession()">Повторить ошибки</button>
+    </div>
+  </section>
+
+  <!-- ── PROGRESS SCREEN ── -->
+  <section class="screen" id="progressScreen">
+    <div class="page-title">Твой прогресс</div>
+    <div class="page-sub">Изученные слова и статистика</div>
+    <div class="summary-grid">
+      <div class="stat-box"><div class="stat-num" id="sumKnown" style="color:var(--accent)">0</div><div class="stat-label">Слов знаю</div></div>
+      <div class="stat-box"><div class="stat-num" id="sumStreak" style="color:var(--gold)">0</div><div class="stat-label">Дней подряд</div></div>
+      <div class="stat-box"><div class="stat-num" id="sumXP">0</div><div class="stat-label">XP всего</div></div>
+    </div>
+    <div class="vocab-list" id="progressList"></div>
+    <button class="reset-btn" onclick="resetProgress()">Сбросить прогресс</button>
+  </section>
+
+  <!-- ── VOCAB SCREEN ── -->
+  <section class="screen" id="vocabScreen">
+    <div class="page-title">Словарь</div>
+    <div class="vocab-list" id="vocabList"></div>
+  </section>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="nav">
+  <button class="nav-btn active" id="navHome" onclick="navTo('home')">
+    <span class="nav-icon">🏠</span>Главная
+  </button>
+  <button class="nav-btn" id="navProgress" onclick="navTo('progress')">
+    <span class="nav-icon">📊</span>Прогресс
+  </button>
+  <button class="nav-btn" id="navVocab" onclick="navTo('vocab')">
+    <span class="nav-icon">📚</span>Словарь
+  </button>
+</nav>
+
+<script>
+// ─────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────
+const CATEGORIES = [
+  { id: 'neuro-core',  name: 'Нейронаука — базис',   color: '#2D6A4F' },
+  { id: 'emotion',     name: 'Эмоции и поведение',    color: '#7B4FA6' },
+  { id: 'cognition',   name: 'Когниция и память',      color: '#2166AC' },
+  { id: 'therapy',     name: 'Терапия и методы',       color: '#B5450B' },
+  { id: 'anatomy',     name: 'Анатомия мозга',         color: '#1A6E8A' },
+  { id: 'academic',    name: 'Академический язык',      color: '#5A5A5A' },
+];
+
+const VOCAB = [
+  // ── НЕЙРОНАУКА БАЗИС ──
+  { id:1, cat:'neuro-core', es:'neuroplasticidad', ru:'нейропластичность', hint_es:'capacidad del cerebro de cambiar', hint_ru:'способность мозга изменяться' },
+  { id:2, cat:'neuro-core', es:'sinapsis', ru:'синапс', hint_es:'conexión entre neuronas', hint_ru:'соединение между нейронами' },
+  { id:3, cat:'neuro-core', es:'neurotransmisor', ru:'нейротрансмиттер', hint_es:'molécula mensajera', hint_ru:'молекула-посредник' },
+  { id:4, cat:'neuro-core', es:'dopamina', ru:'дофамин', hint_es:'molécula de motivación y recompensa', hint_ru:'молекула мотивации и вознаграждения' },
+  { id:5, cat:'neuro-core', es:'serotonina', ru:'серотонин', hint_es:'regula el estado de ánimo', hint_ru:'регулирует настроение' },
+  { id:6, cat:'neuro-core', es:'cortisol', ru:'кортизол', hint_es:'hormona del estrés', hint_ru:'гормон стресса' },
+  { id:7, cat:'neuro-core', es:'oxitocina', ru:'окситоцин', hint_es:'hormona del vínculo social', hint_ru:'гормон социальной связи' },
+  { id:8, cat:'neuro-core', es:'neurona', ru:'нейрон', hint_es:'célula nerviosa', hint_ru:'нервная клетка' },
+  { id:9, cat:'neuro-core', es:'mielina', ru:'миелин', hint_es:'envoltura protectora del axón', hint_ru:'защитная оболочка аксона' },
+  { id:10,cat:'neuro-core', es:'axón', ru:'аксон', hint_es:'extensión larga de la neurona', hint_ru:'длинный отросток нейрона' },
+
+  // ── ЭМОЦИИ ──
+  { id:11,cat:'emotion', es:'regulación emocional', ru:'эмоциональная регуляция', hint_es:'control de las propias emociones', hint_ru:'контроль собственных эмоций' },
+  { id:12,cat:'emotion', es:'reconsolidación de memoria', ru:'реконсолидация памяти', hint_es:'proceso de re-estabilización del recuerdo', hint_ru:'процесс повторной стабилизации воспоминания' },
+  { id:13,cat:'emotion', es:'respuesta al estrés', ru:'реакция на стресс', hint_es:'activación fisiológica ante amenaza', hint_ru:'физиологическая реакция на угрозу' },
+  { id:14,cat:'emotion', es:'apego', ru:'привязанность', hint_es:'vínculo emocional primario', hint_ru:'первичная эмоциональная связь' },
+  { id:15,cat:'emotion', es:'trauma', ru:'травма', hint_es:'herida psicológica profunda', hint_ru:'глубокая психологическая рана' },
+  { id:16,cat:'emotion', es:'resiliencia', ru:'резильентность / стойкость', hint_es:'capacidad de recuperarse', hint_ru:'способность восстанавливаться' },
+  { id:17,cat:'emotion', es:'bienestar', ru:'благополучие', hint_es:'estado de salud y satisfacción', hint_ru:'состояние здоровья и удовлетворённости' },
+  { id:18,cat:'emotion', es:'autocompasión', ru:'самосострадание', hint_es:'amabilidad hacia uno mismo', hint_ru:'доброта к себе' },
+  { id:19,cat:'emotion', es:'mindfulness', ru:'осознанность / майндфулнесс', hint_es:'atención plena al momento presente', hint_ru:'полное внимание к настоящему моменту' },
+  { id:20,cat:'emotion', es:'impulsividad', ru:'импульсивность', hint_es:'acción sin reflexión previa', hint_ru:'действие без предварительного обдумывания' },
+
+  // ── КОГНИЦИЯ ──
+  { id:21,cat:'cognition', es:'memoria de trabajo', ru:'рабочая память', hint_es:'almacenamiento temporal de información', hint_ru:'временное хранилище информации' },
+  { id:22,cat:'cognition', es:'memoria episódica', ru:'эпизодическая память', hint_es:'recuerdos de eventos personales', hint_ru:'воспоминания о личных событиях' },
+  { id:23,cat:'cognition', es:'funciones ejecutivas', ru:'исполнительные функции', hint_es:'planificación y control cognitivo', hint_ru:'планирование и когнитивный контроль' },
+  { id:24,cat:'cognition', es:'atención selectiva', ru:'избирательное внимание', hint_es:'enfoque en estímulos relevantes', hint_ru:'фокус на значимых стимулах' },
+  { id:25,cat:'cognition', es:'metacognición', ru:'метакогниция', hint_es:'pensar sobre el propio pensamiento', hint_ru:'думать о своём мышлении' },
+  { id:26,cat:'cognition', es:'consolidación', ru:'консолидация', hint_es:'estabilización de la memoria a largo plazo', hint_ru:'стабилизация долгосрочной памяти' },
+  { id:27,cat:'cognition', es:'plasticidad sináptica', ru:'синаптическая пластичность', hint_es:'modificación de la fuerza sináptica', hint_ru:'изменение силы синаптического соединения' },
+  { id:28,cat:'cognition', es:'inhibición cognitiva', ru:'когнитивное торможение', hint_es:'suprimir información irrelevante', hint_ru:'подавление нерелевантной информации' },
+  { id:29,cat:'cognition', es:'aprendizaje implícito', ru:'имплицитное обучение', hint_es:'aprendizaje sin conciencia deliberada', hint_ru:'обучение без осознанного намерения' },
+  { id:30,cat:'cognition', es:'cognición social', ru:'социальная когниция', hint_es:'procesamiento de información social', hint_ru:'обработка социальной информации' },
+
+  // ── ТЕРАПИЯ ──
+  { id:31,cat:'therapy', es:'terapia cognitivo-conductual', ru:'когнитивно-поведенческая терапия', hint_es:'CBT — modificación de pensamientos y conductas', hint_ru:'КПТ — изменение мыслей и поведения' },
+  { id:32,cat:'therapy', es:'psicoterapia', ru:'психотерапия', hint_es:'tratamiento psicológico conversacional', hint_ru:'разговорное психологическое лечение' },
+  { id:33,cat:'therapy', es:'intervención', ru:'интервенция / вмешательство', hint_es:'acción terapéutica específica', hint_ru:'конкретное терапевтическое действие' },
+  { id:34,cat:'therapy', es:'protocolo', ru:'протокол', hint_es:'procedimiento estandarizado de tratamiento', hint_ru:'стандартизированная процедура лечения' },
+  { id:35,cat:'therapy', es:'disonancia cognitiva', ru:'когнитивный диссонанс', hint_es:'conflicto entre creencias y conducta', hint_ru:'конфликт между убеждениями и поведением' },
+  { id:36,cat:'therapy', es:'sesión clínica', ru:'клиническая сессия', hint_es:'encuentro terapéutico formal', hint_ru:'формальная терапевтическая встреча' },
+  { id:37,cat:'therapy', es:'autoeficacia', ru:'самоэффективность', hint_es:'creencia en la propia capacidad', hint_ru:'вера в собственные способности' },
+  { id:38,cat:'therapy', es:'recaída', ru:'рецидив', hint_es:'reaparición de síntomas', hint_ru:'возобновление симптомов' },
+
+  // ── АНАТОМИЯ ──
+  { id:39,cat:'anatomy', es:'corteza prefrontal', ru:'префронтальная кора', hint_es:'sede de funciones ejecutivas', hint_ru:'место исполнительных функций' },
+  { id:40,cat:'anatomy', es:'amígdala', ru:'миндалевидное тело', hint_es:'centro del miedo y las emociones', hint_ru:'центр страха и эмоций' },
+  { id:41,cat:'anatomy', es:'hipocampo', ru:'гиппокамп', hint_es:'formación de nuevas memorias', hint_ru:'формирование новых воспоминаний' },
+  { id:42,cat:'anatomy', es:'sistema límbico', ru:'лимбическая система', hint_es:'conjunto de estructuras emocionales', hint_ru:'комплекс эмоциональных структур' },
+  { id:43,cat:'anatomy', es:'córtex cingulado', ru:'поясная кора', hint_es:'regulación emocional y atención', hint_ru:'эмоциональная регуляция и внимание' },
+  { id:44,cat:'anatomy', es:'ínsula', ru:'островковая кора', hint_es:'conciencia corporal e interoceptiva', hint_ru:'телесное и интероцептивное сознание' },
+  { id:45,cat:'anatomy', es:'cerebelo', ru:'мозжечок', hint_es:'coordinación y equilibrio motor', hint_ru:'координация и двигательное равновесие' },
+  { id:46,cat:'anatomy', es:'núcleo accumbens', ru:'прилежащее ядро', hint_es:'circuito de recompensa', hint_ru:'система вознаграждения' },
+
+  // ── АКАДЕМИЧЕСКИЙ ЯЗЫК ──
+  { id:47,cat:'academic', es:'evidencia científica', ru:'научные доказательства', hint_es:'datos que respaldan una hipótesis', hint_ru:'данные, подтверждающие гипотезу' },
+  { id:48,cat:'academic', es:'hipótesis', ru:'гипотеза', hint_es:'suposición a verificar', hint_ru:'предположение для проверки' },
+  { id:49,cat:'academic', es:'metodología', ru:'методология', hint_es:'sistema de métodos de investigación', hint_ru:'система методов исследования' },
+  { id:50,cat:'academic', es:'muestra', ru:'выборка', hint_es:'grupo representativo para el estudio', hint_ru:'репрезентативная группа для исследования' },
+  { id:51,cat:'academic', es:'hallazgos', ru:'результаты / находки', hint_es:'descubrimientos de la investigación', hint_ru:'открытия исследования' },
+  { id:52,cat:'academic', es:'revisión sistemática', ru:'систематический обзор', hint_es:'análisis exhaustivo de la literatura', hint_ru:'исчерпывающий анализ литературы' },
+  { id:53,cat:'academic', es:'neurociencias cognitivas', ru:'когнитивные нейронауки', hint_es:'ciencia del cerebro y la cognición', hint_ru:'наука о мозге и познании' },
+  { id:54,cat:'academic', es:'publicación científica', ru:'научная публикация', hint_es:'artículo en revista revisada', hint_ru:'статья в рецензируемом журнале' },
+  { id:55,cat:'academic', es:'investigación clínica', ru:'клиническое исследование', hint_es:'estudio con pacientes o participantes', hint_ru:'исследование с участием пациентов' },
+  { id:56,cat:'academic', es:'diagnóstico diferencial', ru:'дифференциальная диагностика', hint_es:'distinguir entre posibles diagnósticos', hint_ru:'различение возможных диагнозов' },
+];
+
+const XP = { cards: 10, choice: 15, type: 20 };
+const SESSION_SIZE = 10;
+const STORE_KEY = 'neuroES_v1';
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let state = {
+  mode: 'cards',
+  direction: 'es-ru',
+  selectedCats: new Set(CATEGORIES.map(c => c.id)),
+  session: [],
+  sessionIdx: 0,
+  correct: 0,
+  wrong: 0,
+  sessionXP: 0,
+  wrongCards: [],
+  isFlipped: false,
+  answered: false,
+  xp: 0,
+  streak: 0,
+  lastDay: null,
+  progress: {},   // id -> {correct, wrong}
+};
+
+function dayKey(d) { return d.toLocaleDateString('sv-SE'); } // YYYY-MM-DD, локальное время
+function today() { return dayKey(new Date()); }
+function yesterday() { const d = new Date(); d.setDate(d.getDate() - 1); return dayKey(d); }
+
+try {
+  const saved = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+  if (saved.xp) state.xp = saved.xp;
+  if (saved.streak) state.streak = saved.streak;
+  if (saved.lastDay) state.lastDay = saved.lastDay;
+  if (saved.progress) state.progress = saved.progress;
+} catch (e) {}
+
+// серия обнуляется, если пропущен день
+if (state.lastDay && state.lastDay !== today() && state.lastDay !== yesterday()) state.streak = 0;
+
+function save() {
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify({
+      xp: state.xp, streak: state.streak, lastDay: state.lastDay, progress: state.progress
+    }));
+  } catch (e) {}
+}
+
+function markPracticedToday() {
+  const t = today();
+  if (state.lastDay === t) return;
+  state.streak = state.lastDay === yesterday() ? state.streak + 1 : 1;
+  state.lastDay = t;
+}
+
+// ─────────────────────────────────────────────
+// UI HELPERS
+// ─────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+
+function showScreen(id) {
+  document.querySelectorAll('.screen, .results-screen').forEach(s => s.classList.remove('active'));
+  $(id).classList.add('active');
+  $('progressWrap').hidden = !['cardsScreen', 'choiceScreen', 'typeScreen'].includes(id);
+  $('main').scrollTop = 0;
+}
+
+function setNav(tab) {
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  if (tab) $('nav' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+}
+
+function updateHeader() {
+  $('streakNum').textContent = state.streak;
+  $('xpNum').textContent = state.xp;
+}
+
+function updateProgress() {
+  const total = state.session.length;
+  const done = state.sessionIdx;
+  const pct = total ? Math.round(done / total * 100) : 0;
+  $('progressFill').style.width = pct + '%';
+  $('progressLabel').textContent = `Вопрос ${Math.min(done + 1, total)} из ${total}`;
+  $('progressPct').textContent = pct + '%';
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+
+function getCat(catId) { return CATEGORIES.find(c => c.id === catId) || { name: '', color: '#2D6A4F' }; }
+function isKnown(id) { return (state.progress[id]?.correct || 0) > 0; }
+
+// ─────────────────────────────────────────────
+// HOME SCREEN
+// ─────────────────────────────────────────────
+function renderCats() {
+  const list = $('catsList');
+  list.innerHTML = '';
+  CATEGORIES.forEach(cat => {
+    const words = VOCAB.filter(w => w.cat === cat.id);
+    const known = words.filter(w => isKnown(w.id)).length;
+    const pct = words.length ? Math.round(known / words.length * 100) : 0;
+    const div = document.createElement('div');
+    div.className = 'cat-row' + (state.selectedCats.has(cat.id) ? ' selected' : '');
+    div.innerHTML = `
+      <div class="cat-dot" style="background:${cat.color}"></div>
+      <div class="cat-name">${cat.name}</div>
+      <div class="cat-progress-mini"><div class="cat-progress-mini-fill" style="width:${pct}%;background:${cat.color}"></div></div>
+      <div class="cat-count">${known}/${words.length}</div>`;
+    div.onclick = () => toggleCat(cat.id, div);
+    list.appendChild(div);
+  });
+}
+
+function toggleCat(id, el) {
+  if (state.selectedCats.has(id)) {
+    if (state.selectedCats.size > 1) { state.selectedCats.delete(id); el.classList.remove('selected'); }
+  } else {
+    state.selectedCats.add(id); el.classList.add('selected');
+  }
+}
+
+function selectMode(m) {
+  state.mode = m;
+  const modes = ['cards', 'choice', 'type', 'all'];
+  document.querySelectorAll('.mode-card').forEach((c, i) => {
+    c.style.borderColor = modes[i] === m ? 'var(--accent)' : '';
+    c.style.background = modes[i] === m ? 'var(--accent-lt)' : '';
+  });
+}
+
+function setDir(d) {
+  state.direction = d;
+  document.querySelectorAll('.dir-btn').forEach(b => b.classList.remove('active'));
+  $(d === 'es-ru' ? 'dirES' : d === 'ru-es' ? 'dirRU' : 'dirBOTH').classList.add('active');
+}
+
+function beginSession(cards) {
+  state.session = cards;
+  state.sessionIdx = 0;
+  state.correct = 0;
+  state.wrong = 0;
+  state.sessionXP = 0;
+  state.wrongCards = [];
+  setNav(null);
+  nextCard();
+}
+
+function startSession() {
+  const pool = VOCAB.filter(w => state.selectedCats.has(w.cat));
+  if (!pool.length) return;
+  // сначала менее знакомые слова; внутри одинакового уровня — случайно
+  const score = w => { const p = state.progress[w.id] || { correct: 0, wrong: 0 }; return p.correct - p.wrong * 2; };
+  const sorted = shuffle(pool).sort((a, b) => score(a) - score(b));
+  beginSession(shuffle(sorted.slice(0, SESSION_SIZE)));
+}
+
+// ─────────────────────────────────────────────
+// MODE / DIRECTION FOR CURRENT CARD
+// ─────────────────────────────────────────────
+function currentMode() {
+  if (state.mode === 'all') return ['cards', 'choice', 'type'][state.sessionIdx % 3];
+  return state.mode;
+}
+function currentDirection() {
+  if (state.direction === 'both') return state.sessionIdx % 2 === 0 ? 'es-ru' : 'ru-es';
+  return state.direction;
+}
+
+function nextCard() {
+  if (state.sessionIdx >= state.session.length) { showResults(); return; }
+  state.answered = false;
+  const card = state.session[state.sessionIdx];
+  const m = currentMode();
+  const dir = currentDirection();
+  if (m === 'cards') showCardMode(card, dir);
+  else if (m === 'choice') showChoiceMode(card, dir);
+  else showTypeMode(card, dir);
+}
+
+// единая запись ответа
+function recordAnswer(card, ok, mode) {
+  if (!state.progress[card.id]) state.progress[card.id] = { correct: 0, wrong: 0 };
+  if (ok) {
+    state.correct++;
+    state.xp += XP[mode];
+    state.sessionXP += XP[mode];
+    state.progress[card.id].correct++;
+  } else {
+    state.wrong++;
+    state.wrongCards.push(card);
+    state.progress[card.id].wrong++;
+  }
+  state.sessionIdx++;
+  save();
+  updateHeader();
+}
+
+// ─────────────────────────────────────────────
+// CARDS MODE
+// ─────────────────────────────────────────────
+function showCardMode(card, dir) {
+  showScreen('cardsScreen');
+  updateProgress();
+  state.isFlipped = false;
+  $('flipCard').classList.remove('flipped');
+  const cat = getCat(card.cat);
+  const es = dir === 'es-ru';
+  $('cardFrontLang').textContent = es ? 'ESPAÑOL' : 'РУССКИЙ';
+  $('cardFrontWord').textContent = es ? card.es : card.ru;
+  $('cardFrontHint').textContent = (es ? card.hint_es : card.hint_ru) || '';
+  $('cardBackLang').textContent = es ? 'РУССКИЙ' : 'ESPAÑOL';
+  $('cardBackWord').textContent = es ? card.ru : card.es;
+  $('cardBackHint').textContent = (es ? card.hint_ru : card.hint_es) || '';
+  ['cardFrontCat', 'cardBackCat'].forEach(id => {
+    const el = $(id);
+    el.textContent = cat.name;
+    el.style.background = cat.color + '22';
+    el.style.color = cat.color;
+  });
+  $('cardActions').hidden = true;
+  $('cardTapHint').hidden = false;
+}
+
+function flipCard() {
+  if (state.isFlipped) return;
+  state.isFlipped = true;
+  $('flipCard').classList.add('flipped');
+  $('cardActions').hidden = false;
+  $('cardTapHint').hidden = true;
+}
+
+function rateCard(ok) {
+  if (!state.isFlipped || state.answered) return;
+  state.answered = true;
+  recordAnswer(state.session[state.sessionIdx], ok, 'cards');
+  nextCard();
+}
+
+// ─────────────────────────────────────────────
+// CHOICE MODE
+// ─────────────────────────────────────────────
+function showChoiceMode(card, dir) {
+  showScreen('choiceScreen');
+  updateProgress();
+  const es = dir === 'es-ru';
+  $('qLabel').textContent = es ? 'ESPAÑOL → РУССКИЙ' : 'РУССКИЙ → ESPAÑOL';
+  $('qWord').textContent = es ? card.es : card.ru;
+  $('qHint').textContent = (es ? card.hint_es : card.hint_ru) || '';
+
+  const pool = shuffle(VOCAB.filter(w => w.id !== card.id && w.cat === card.cat)).slice(0, 3);
+  if (pool.length < 3) shuffle(VOCAB.filter(w => w.cat !== card.cat)).slice(0, 3 - pool.length).forEach(w => pool.push(w));
+  const correct = es ? card.ru : card.es;
+  const choices = shuffle([...pool.map(w => es ? w.ru : w.es), correct]);
+  const letters = ['А', 'Б', 'В', 'Г'];
+  const list = $('choicesList');
+  list.innerHTML = '';
+  choices.forEach((ch, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.dataset.value = ch;
+    btn.innerHTML = `<span class="choice-letter">${letters[i]}</span><span>${ch}</span>`;
+    btn.onclick = () => selectChoice(ch, correct, btn);
+    list.appendChild(btn);
+  });
+  $('choiceNext').classList.remove('visible');
+}
+
+function selectChoice(chosen, correct, btn) {
+  if (state.answered) return;
+  state.answered = true;
+  const btns = document.querySelectorAll('.choice-btn');
+  btns.forEach(b => b.disabled = true);
+  const ok = chosen === correct;
+  btn.classList.add(ok ? 'correct' : 'wrong');
+  if (!ok) btns.forEach(b => { if (b.dataset.value === correct) b.classList.add('correct'); });
+  recordAnswer(state.session[state.sessionIdx], ok, 'choice');
+  $('choiceNext').classList.add('visible');
+}
+
+// ─────────────────────────────────────────────
+// TYPE MODE
+// ─────────────────────────────────────────────
+function showTypeMode(card, dir) {
+  showScreen('typeScreen');
+  updateProgress();
+  const es = dir === 'es-ru';
+  $('typeLabel').textContent = es ? 'ESPAÑOL → РУССКИЙ' : 'РУССКИЙ → ESPAÑOL';
+  $('typeWord').textContent = es ? card.es : card.ru;
+  $('typeHint').textContent = (es ? card.hint_es : card.hint_ru) || '';
+  const inp = $('typeInput');
+  inp.value = '';
+  inp.className = 'type-input';
+  inp.readOnly = false;
+  inp.placeholder = es ? 'Введи перевод по-русски…' : 'Escribe en español…';
+  const res = $('typeResult');
+  res.className = 'type-result';
+  res.textContent = '';
+  $('typeBtn').textContent = 'Проверить';
+  setTimeout(() => inp.focus(), 50);
+}
+
+function normalize(s) {
+  return s.toLowerCase().trim()
+    .replace(/ё/g, 'е')
+    .replace(/[áàä]/g, 'a').replace(/[éèë]/g, 'e').replace(/[íìï]/g, 'i')
+    .replace(/[óòö]/g, 'o').replace(/[úùü]/g, 'u').replace(/ñ/g, 'n')
+    .replace(/[^a-zа-я0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function checkType() {
+  const card = state.session[state.sessionIdx];
+  const es = currentDirection() === 'es-ru';
+  const correct = es ? card.ru : card.es;
+  const inp = $('typeInput');
+  const val = inp.value;
+  if (!val.trim()) return;
+  state.answered = true;
+  const ok = correct.split('/').map(s => s.trim()).some(v => normalize(v) === normalize(val));
+  inp.readOnly = true;
+  inp.classList.add(ok ? 'correct' : 'wrong');
+  const res = $('typeResult');
+  res.className = 'type-result ' + (ok ? 'correct' : 'wrong');
+  res.textContent = ok ? '✓ Правильно!' : `✗ Правильно: ${correct}`;
+  recordAnswer(card, ok, 'type');
+  $('typeBtn').textContent = 'Далее →';
+}
+
+function typeAction() {
+  if (state.answered) nextCard(); else checkType();
+}
+function typeKeydown(e) {
+  if (e.key === 'Enter') { e.preventDefault(); typeAction(); }
+}
+
+// ─────────────────────────────────────────────
+// RESULTS
+// ─────────────────────────────────────────────
+function showResults() {
+  showScreen('resultsScreen');
+  markPracticedToday();
+  save();
+  updateHeader();
+  const total = state.correct + state.wrong;
+  const pct = total ? Math.round(state.correct / total * 100) : 0;
+  $('resultsEmoji').textContent = pct === 100 ? '🧠✨' : pct >= 80 ? '🎉' : pct >= 60 ? '💪' : '📖';
+  $('resultsTitle').textContent = pct === 100 ? '100%! Превосходно!' : pct >= 80 ? 'Отличный результат!' : pct >= 60 ? 'Хороший старт!' : 'Продолжай, мозг уже перестраивается!';
+  $('resultsSub').textContent = `${state.correct} из ${total} — ${pct}% правильно`;
+  $('statCorrect').textContent = state.correct;
+  $('statWrong').textContent = state.wrong;
+  $('statXP').textContent = state.sessionXP;
+  $('retryBtn').hidden = state.wrongCards.length === 0;
+}
+
+function goHome() {
+  setNav('home');
+  showScreen('homeScreen');
+  renderCats();
+}
+
+function retrySession() {
+  if (!state.wrongCards.length) { goHome(); return; }
+  beginSession(shuffle(state.wrongCards));
+}
+
+// ─────────────────────────────────────────────
+// NAV: progress & vocab
+// ─────────────────────────────────────────────
+function navTo(tab) {
+  if (tab === 'home') { goHome(); return; }
+  setNav(tab);
+  if (tab === 'progress') renderProgress();
+  else renderVocab();
+}
+
+function renderProgress() {
+  $('sumKnown').textContent = VOCAB.filter(w => isKnown(w.id)).length + '/' + VOCAB.length;
+  $('sumStreak').textContent = state.streak;
+  $('sumXP').textContent = state.xp;
+  $('progressList').innerHTML = CATEGORIES.map(cat => {
+    const words = VOCAB.filter(w => w.cat === cat.id);
+    const known = words.filter(w => isKnown(w.id)).length;
+    const pct = words.length ? Math.round(known / words.length * 100) : 0;
+    return `<div class="prog-row">
+      <div class="prog-row-top"><span class="prog-row-name">${cat.name}</span><span class="prog-row-num">${known}/${words.length}</span></div>
+      <div class="prog-track"><div class="prog-fill" style="width:${pct}%;background:${cat.color}"></div></div>
+    </div>`;
+  }).join('');
+  showScreen('progressScreen');
+}
+
+function renderVocab() {
+  $('vocabList').innerHTML = CATEGORIES.map(cat => {
+    const rows = VOCAB.filter(w => w.cat === cat.id).map(w => `
+      <div class="vocab-row" style="${isKnown(w.id) ? `border-color:${cat.color}55` : ''}">
+        <div class="vocab-dot" style="background:${cat.color}"></div>
+        <div style="flex:1;min-width:0;"><div class="vocab-es">${w.es}</div><div class="vocab-ru">${w.ru}</div></div>
+        ${isKnown(w.id) ? '<span class="vocab-ok">✓</span>' : ''}
+      </div>`).join('');
+    return `<div class="cats-section"><h3>${cat.name}</h3></div>${rows}`;
+  }).join('');
+  showScreen('vocabScreen');
+}
+
+function resetProgress() {
+  if (!confirm('Сбросить весь прогресс, XP и серию дней?')) return;
+  state.progress = {}; state.xp = 0; state.streak = 0; state.lastDay = null;
+  save(); updateHeader(); renderProgress();
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+selectMode('cards');
+renderCats();
+updateHeader();
+save();
+
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+</script>
+</body>
+</html>
