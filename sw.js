@@ -1,6 +1,6 @@
 // NeuroEspañol — офлайн-режим.
 // При изменении index.html увеличь номер версии, чтобы телефон подтянул обновление.
-const VERSION = 'neuroes-v2';
+const VERSION = 'neuroes-v3';
 const SHELL = [
   './',
   './index.html',

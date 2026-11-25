@@ -15,7 +15,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap">
 <style>
 :root {
   --bg:        #F7F5F0;
@@ -174,7 +174,7 @@ body {
   text-align: center;
 }
 .home-hero h2 {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-weight: 700;
   font-size: 20px;
   text-wrap: balance;
@@ -200,7 +200,7 @@ body {
 .mode-card:active { transform: translateY(0); }
 .mode-icon { font-size: 22px; margin-bottom: 8px; }
 .mode-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-weight: 600;
   font-size: 14px;
   margin-bottom: 3px;
@@ -237,7 +237,7 @@ body {
 }
 
 .cats-section h3 {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-weight: 700;
   font-size: 13px;
   letter-spacing: 0.06em;
@@ -281,7 +281,7 @@ body {
   color: #fff;
   border: none;
   border-radius: var(--radius);
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-weight: 700;
   font-size: 16px;
   cursor: pointer;
@@ -336,7 +336,7 @@ body {
   color: var(--fg2);
 }
 .card-word {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-size: clamp(22px, 5vw, 32px);
   font-weight: 700;
   text-align: center;
@@ -367,7 +367,7 @@ body {
   padding: 13px;
   border: none;
   border-radius: var(--radius);
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-weight: 700;
   font-size: 15px;
   cursor: pointer;
@@ -394,7 +394,7 @@ body {
 }
 .question-label { font-size: 12px; color: var(--fg2); letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
 .question-word {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-weight: 800;
   font-size: clamp(22px, 5vw, 30px);
   text-wrap: balance;
@@ -445,7 +445,7 @@ body {
   color: #fff;
   border: none;
   border-radius: var(--radius);
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-weight: 700;
   font-size: 16px;
   cursor: pointer;
@@ -466,7 +466,7 @@ body {
   flex-shrink: 0;
 }
 .type-word {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-weight: 800;
   font-size: clamp(22px, 5vw, 30px);
   text-wrap: balance;
@@ -480,7 +480,7 @@ body {
   background: var(--card-bg);
   border: 1.5px solid var(--border);
   border-radius: var(--radius);
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-size: 18px;
   font-weight: 600;
   color: var(--fg);
@@ -506,7 +506,7 @@ body {
   color: #fff;
   border: none;
   border-radius: var(--radius);
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-weight: 700;
   font-size: 16px;
   cursor: pointer;
@@ -527,7 +527,7 @@ body {
 .results-screen.active { display: flex; }
 .results-emoji { font-size: 56px; }
 .results-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-weight: 800;
   font-size: 26px;
   text-wrap: balance;
@@ -548,7 +548,7 @@ body {
   text-align: center;
 }
 .stat-num {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-weight: 800;
   font-size: 24px;
   font-variant-numeric: tabular-nums;
@@ -561,7 +561,7 @@ body {
   color: #fff;
   border: none;
   border-radius: var(--radius);
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-weight: 700;
   font-size: 16px;
   cursor: pointer;
@@ -573,7 +573,7 @@ body {
   color: var(--fg2);
   border: 1.5px solid var(--border);
   border-radius: var(--radius);
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', system-ui, sans-serif;
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
@@ -616,6 +616,7 @@ body {
 
 
 /* ─── PWA / mobile additions ─── */
+.card-word, .question-word, .type-word { letter-spacing: -0.01em; line-height: 1.2; }
 [hidden] { display: none !important; }
 html, body { height: 100%; overscroll-behavior: none; }
 body {
@@ -629,7 +630,7 @@ button, .mode-card, .cat-row, .flip-card { touch-action: manipulation; -webkit-u
 .main { overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .cats-list { max-height: none; overflow: visible; }
 .nav { padding-bottom: max(6px, env(safe-area-inset-bottom, 0px)); }
-.page-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; }
+.page-title { font-family: 'Manrope', system-ui, sans-serif; font-weight: 800; font-size: 20px; }
 .page-sub { color: var(--fg2); font-size: 13px; margin-top: -8px; }
 .prog-row { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; }
 .prog-row-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
